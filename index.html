@@ -11,8 +11,9 @@
     <h2>STEP 1: Að setja upp ubuntu server á virtual box vél</h2>
 
     <p>Farið inná þessa síðu til að ná í virtual box 5.1.8:<a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
-    <p>Náið svo í Ubuntu Server 16.04.1 LTS(32 bit):<a href="http://releases.ubuntu.com/16.04/ubuntu-16.04.1-server-i386.iso.torrent?_ga=1.50602473.1701722296.1461075886">Hér</a></p>
+    <p>Náið svo í Ubuntu Server 16.04.1 LTS:<a href="https://www.ubuntu.com/download/server">https://www.ubuntu.com/download/server</a></p>
     <p>
+        Við skulum byrja á því að fara í bios settings á tölvunni og virkja virtualization þannig við getum notað 64bit.</br>
         Farið í NEW flipann>skrifið 'ubuntu' í name dálkinn og smellið á next>next>create>next>next>create.</br>
         Hægri smellið á virtual vélina sem þið bjugguð til > settings > storage > smellið á adds optical drive(diskur með grænum
         plús) ></br>
@@ -22,21 +23,39 @@
         hakið við open ssh client.
     </p>
 
-    <h2>STEP 2: docker og apache</h2>
+    <h2>STEP 2: Setjum upp apache</h2>
 
-    <p></p>
+    <p>
+        sudo apt-get update </br>
+        sudo apt-get install apache2</br>
+        chekkum hvaða version við erum að nota: apache2 -v (2.4.18)
+    </p>
 
-    <h2>STEP 3:</h2>
+    <h2>STEP 3: Docker</h2>
 
-    <div>
-        some text here
-    </div>
+    <p>
+        notum curl til að ná í docker. </br>
+        tjekkum hvort við erum með curl uppsett: which curl. Ef ekki þá gerum við:
+        sudo apt-get update </br>
+        sudo apt-get install curl </br>
+        curl -fsSL https://get.docker.com/ | sh</br>
+        gerum: 'docker version' til að chekka hvort daemon serverinn er i gangi.</br>
+        Ef ekki þá gerum við:</br>
+        sudo service docker stop</br>
+        sudo service docker start</br>
+        sudo usermod -aG docker 'notendanafn'</br>
+        exit</br>
+        gerum aftur: 'docker version' og þá ætti þetta að vera komið</br>
+    </p>
 
-    <h2>STEP 4: </h2>
+    <h2>STEP 4: MySQL</h2>
 
-    <div>
-        some text here
-    </div>
+    <p>
+        sudo apt-get install mysql-server</br>
+        setup scripta: 'sudo /usr/bin/mysql_secure_installation'. veljið alltaf já við alla möguleika nema</br>
+         þegar það er beðið þig um að breyta root passwordinu</br>
+         mysql -u root -p
+    </p>
 
         <div id="linux">LINUX TÓL:</div>
         <div id="linuxtools">
