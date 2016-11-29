@@ -2,92 +2,181 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="index.css">
+
 </head>
 
 <body>
 
     <h1 id="firsthead">LINUX 203 TUTORIAL</h1>
     <div id="left">
-    <h2>STEP 1: Að setja upp ubuntu server á virtual box vél</h2>
+        <h2>STEP 1: Að setja upp ubuntu server á virtual box vél</h2>
 
-    <p>Farið inná þessa síðu til að ná í virtual box 5.1.8:<a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
-    <p>Náið svo í Ubuntu Server 16.04.1 LTS:<a href="https://www.ubuntu.com/download/server">https://www.ubuntu.com/download/server</a></p>
-    <p>
-        Við skulum byrja á því að fara í bios settings á tölvunni og virkja virtualization þannig við getum notað 64bit.</br>
-        Farið í NEW flipann>skrifið 'ubuntu' í name dálkinn og smellið á next>next>create>next>next>create.</br>
-        Hægri smellið á virtual vélina sem þið bjugguð til > settings > storage > smellið á adds optical drive(diskur með grænum
-        plús) ></br>
-        choose disk og ubuntu server diskinn sem þið náðuð í. Rúllið svo í gegnum setup-ið og þegar það kemur að þvi að velja auka
-        fítusa,
-        </br>
-        hakið við open ssh client.
-    </p>
+        <p>Farið inná þessa síðu til að ná í virtual box 5.1.8:<a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
+        <p>Náið svo í Ubuntu Server 16.04.1 LTS:<a href="https://www.ubuntu.com/download/server">https://www.ubuntu.com/download/server</a></p>
+        <p>
+            Við skulum byrja á því að fara í bios settings á tölvunni og virkja virtualization þannig við getum notað 64bit.</br>
+            Farið í NEW flipann>skrifið 'ubuntu' í name dálkinn og smellið á next>next>create>next>next>create.</br>
+            Hægri smellið á virtual vélina sem þið bjugguð til > settings > storage > smellið á adds optical drive(diskur með grænum
+            plús) ></br>
+            choose disk og ubuntu server diskinn sem þið náðuð í. Rúllið svo í gegnum setup-ið og þegar það kemur að þvi að velja auka
+            fítusa,
+            </br>
+            hakið við open ssh client.
+        </p>
 
-    <h2>STEP 2: Setjum upp apache</h2>
+        <h2>STEP 2: Setjum upp apache (version 2.4.18)</h2>
 
-    <p>
-        $ sudo apt-get update </br>
-        $ sudo apt-get install apache2</br>
-        chekkum hvaða version við erum að nota: $ apache2 -v (2.4.18)
-    </p>
+        <p>
+            <code>
+                $ sudo apt-get update </br>
+                $ sudo apt-get install apache2</code>
+            </br>
+            Tjékkum hvaða version við erum að nota:</br>
+            <code>$ apache2 -v (2.4.18)</code></br>
+            Til að finna ip addressuna þína þá gerum við:</br>
+            <code>$ifconfig eth0 | grep inet | awk '{ print $2 }'</code>
+        </p>
 
-    <h2>STEP 3: Docker</h2>
+        <h2>STEP 3: Docker(version 1.12.3)</h2>
 
-    <p>
-        notum curl til að ná í docker. </br>
-        tjekkum hvort við erum með curl uppsett: $ which curl</br>
-        Ef ekki þá gerum við:
-        $ sudo apt-get update </br>
-        $ sudo apt-get install curl </br>
-        $ curl -fsSL https://get.docker.com/ | sh</br>
-        $docker version (til að fá upplýsingar um docker)</br>
-        Ef daemon serverinn er ekki í gangi þá gerum við:</br>
-        $ sudo service docker stop</br>
-        $ sudo service docker start</br>
-        $ sudo usermod -aG docker 'notendanafn'</br>
-        $ exit</br>
-        $ docker version</br>
-        þá ætti þetta að vera komið</br>
-    </p>
+        <p>
+            Við ætlum að nota curl til að ná í docker.</br>
+            Tjékkum hvort við erum með curl uppsett:
+            </br>
+            <code>$ which curl</code></br>
+            Ef ekki þá gerum við:
+            <code>$ sudo apt-get update </br>
+            $ sudo apt-get install curl </br>
+            $ curl -fsSL https://get.docker.com/ | sh</code></br>
+            Fáum upplýsingar um docker:
+            <code>$docker version</code></br>
+            Ef daemon serverinn er ekki í gangi þá gerum við:</br>
+            <code>$ sudo service docker stop</br>
+            $ sudo service docker start</br>
+            $ sudo usermod -aG docker 'notendanafn'</br>
+            $ exit</br>
+            $ docker version</br>
+            </code> þá ætti þetta að vera komið.</br>
+        </p>
 
-    <h2>STEP 4: Búum til apache server á docker container</h2>
+        <h2>STEP 4: Búum til apache server á docker container</h2>
 
-    <p>
-        $ docker pull httpd</br>
-        $ docker pull eboraas/apache</br>
-        $ docker run -p 80:80 -p 443:443 -v /home/user/mysite/:/var/www/html/ -d eboraas/apache
-    </p>
+        <p>
+            <code>
+            $ docker pull httpd</br>
+            $ docker pull eboraas/apache</br>
+            $ docker run -p 80:80 -p 443:443 -v /home/user/mysite/:/var/www/html/ -d eboraas/apache
+            </code>
+        </p>
 
-    <h2>STEP 5: Setjum upp MySQL</h2>
+        <h2>STEP 5: Setjum upp MySQL (version 5.7.16)</h2>
 
-    <p>
-        $ sudo apt-get install mysql-server</br>
-        $ sudo /usr/bin/mysql_secure_installation (setup scripta)</br>
-        veljið alltaf já við alla möguleika nema þegar það er beðið þig um að breyta root passwordinu</br>
-        Til að fara í mysql skelina gerum við:
-        $ mysql -u root -p</br>
-        til að fara úr skelinni:</br>
-        # exit
-    </p>
+        <p>
+            Veljið alltaf já við alla möguleika í installinu nema þegar það er beðið þig um að breyta root passwordinu.
+            <code>
+            $ sudo apt-get install mysql-server</br>
+            $ sudo /usr/bin/mysql_secure_installation (setup scripta)</br>
+            </code>
+            </br>
+            Til að byrja að nota mysql skelina gerum við:
+            <code> $ mysql -u root -p</code>
+            </br>
+            Förum svo úr skelinni:</br>
+            <code># exit</code>
+        </p>
 
-    <h2>STEP 5: Búum til MySQL scriptu sem býr til 15 notendur</h2>
+        <h2>STEP 5: Búum til MySQL scriptu sem býr til 15 notendur</h2>
 
-    <p>
-        $ touch userscript</br>
-        $ sudo chmod 777 userscript</br>
-        $ nano userscript</br>
-    </p>
+        <p>
+            <code>
+            $ touch userscript</br>
+            $ sudo chmod 777 userscript</br>
+            $ nano userscript
+            </code>
+            </br>
+            <code>
+                for i in {1..15}</br>
+                do</br>
+                mysql -u root -p rootpw -e "CREATE USER 'notandi_$i'@'localhost' IDENTIFIED BY 'password_$i'"<br>
+            </code>
+        </p>
 
-        <div id="linux">LINUX TÓL:</div>
+        <h2>STEP 5: Setjum upp PHPMyAdmin(version 4.5.4.1)</h2>
+
+        <p>
+            Það mun biðja þig um password í installinu.
+            <code>
+            $sudo apt-get install phpmyadmin</br>
+            $sudo apt-get install phpmyadmin apache2-utils</br>
+            $sudo nano /etc/apache2/apache2.conf</br>
+            $Include /etc/phpmyadmin/apache.conf</br>
+            $sudo service apache2 restart</br>
+            </code> Nú ættiru að geta farið á inná (ip address-an þín)/phpmyadmin
+        </p>
+
+        <h2>STEP 6: Búum til töflu í MySQL</h2>
+
+        <p>
+            Búum fyrst til gagnagrunn fyrir töfluna.</br>
+            Byrjum á að fara inní skelina:<br>
+            <code> $ mysql -u root -p</code>
+            <code>
+            #CREATE DATABASE linuxdatabase;</code>
+            </br>
+            Búum til töfluna:
+            <code>
+            #CREATE TABLE Logs</br>
+            USE Logs</br>
+            (</br>
+            &emsp;ID int NOT NULL,</br>
+            &emsp;date date,</br>
+            &emsp;User varchar(32),</br>
+            &emsp;Memory int,</br>
+            &emsp;IP varchar(32),</br>
+            &emsp;Hostname varchar(32).</br>
+            &emsp;PRIMARY KEY(ID)</br>
+            );
+            </code>
+        </p>
+
+        <h2>STEP 6: Búum til scriptu sem keyrir alla daga kl 12:00</h2>
+
+        <p>
+            <code>
+            $touch logscript</br>
+            $sudo chmod 777 logscipt</br>
+            $nano logscript</br>
+            </code><br>
+            Inní scriptunni skrifum við þetta:</br>
+            <code>
+                date=$(date +%Y-%m-%d)</br>
+                user=$USER</br>
+                memory=$(free | awk 'FNR == 2 {print $3}')</br>
+                ip=$(hostname -I | cut -d' ' -f1)</br>
+                hostname=$(hostname)</br>
+                </br>
+                mysql --user=root --password=rootpw databasename
+                << EOF</br>
+                insert into Logs (Date, User, Memory, IP, Hostname) values('$date', '$user', '$memory', '$ip', '$hostname');</br>
+                EOF</br>
+            </code>
+            <br>
+            <code>$crontab -e</code></br>
+            Förum svo neðst í skjalið og bætum við þessu:</br>
+            <code>0 12 * * * root/.logscript</code>
+        </p>
+
+        <div id="linux">UPPÁHALDS LINUX TÓLIN:</div>
         <div id="linuxtools">
-        <p><b>cat:</b> Prentar út á skjáinn það sem er inní textaskjalinu.</p>
-        <p><b>ls:</b> Prentar út það sem er í directory-inu.</p>
-        <p><b>date:</b> Prentar út núverandi dagsetningu.</p>
-        <p><b>cd:</b> Breytir um directory.</p>
-        <p><b>mkdir:</b> Býr til möppu.</p>
-        <p><b>rmdir:</b> Eyðir möppu.</p>
-        <p><b>touch:</b> Getur notað þessa skipun til þess að búa til textaskjöl, skriptur og fl.</p>
+            <p><b>cat:</b> Prentar út á skjáinn það sem er inní textaskjalinu.</p>
+            <p><b>ls:</b> Prentar út það sem er í directory-inu.</p>
+            <p><b>date:</b> Prentar út núverandi dagsetningu.</p>
+            <p><b>cd:</b> Breytir um directory.</p>
+            <p><b>mkdir:</b> Býr til möppu.</p>
+            <p><b>rmdir:</b> Eyðir möppu.</p>
+            <p><b>touch:</b> Getur notað þessa skipun til þess að búa til textaskjöl, skriptur og fl.</p>
         </div>
     </div>
 </body>
