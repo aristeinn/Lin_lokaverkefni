@@ -3,15 +3,18 @@ body{
     font-family: Verdana;
     text-align: center;
 }
+#left{
+    display: inline-block;
+    text-align: left;
+}
 
 #firsthead{
     font-size: 100px;
 }
 
 h2{
-    position: relative;
-    left: 20%;
-    width: 60%;
+  display:inline-block;
+  text-align: left;
 }
 
 #linux{
