@@ -27,37 +27,57 @@
     <h2>STEP 2: Setjum upp apache</h2>
 
     <p>
-        sudo apt-get update </br>
-        sudo apt-get install apache2</br>
-        chekkum hvaða version við erum að nota: apache2 -v (2.4.18)
+        $ sudo apt-get update </br>
+        $ sudo apt-get install apache2</br>
+        chekkum hvaða version við erum að nota: $ apache2 -v (2.4.18)
     </p>
 
     <h2>STEP 3: Docker</h2>
 
     <p>
         notum curl til að ná í docker. </br>
-        tjekkum hvort við erum með curl uppsett: which curl. Ef ekki þá gerum við:
-        sudo apt-get update </br>
-        sudo apt-get install curl </br>
-        curl -fsSL https://get.docker.com/ | sh</br>
-        gerum: 'docker version' til að chekka hvort daemon serverinn er i gangi.</br>
-        Ef ekki þá gerum við:</br>
-        sudo service docker stop</br>
-        sudo service docker start</br>
-        sudo usermod -aG docker 'notendanafn'</br>
-        exit</br>
-        gerum aftur: 'docker version' og þá ætti þetta að vera komið</br>
+        tjekkum hvort við erum með curl uppsett: $ which curl</br>
+        Ef ekki þá gerum við:
+        $ sudo apt-get update </br>
+        $ sudo apt-get install curl </br>
+        $ curl -fsSL https://get.docker.com/ | sh</br>
+        $docker version (til að fá upplýsingar um docker)</br>
+        Ef daemon serverinn er ekki í gangi þá gerum við:</br>
+        $ sudo service docker stop</br>
+        $ sudo service docker start</br>
+        $ sudo usermod -aG docker 'notendanafn'</br>
+        $ exit</br>
+        $ docker version</br>
+        þá ætti þetta að vera komið</br>
     </p>
 
-    <h2>STEP 4: MySQL</h2>
+    <h2>STEP 4: Búum til apache server á docker container</h2>
 
     <p>
-        sudo apt-get install mysql-server</br>
-        setup scripta: 'sudo /usr/bin/mysql_secure_installation'. veljið alltaf já við alla möguleika nema</br>
-         þegar það er beðið þig um að breyta root passwordinu</br>
-         mysql -u root -p
+        $ docker pull httpd</br>
+        $ docker pull eboraas/apache</br>
+        $ docker run -p 80:80 -p 443:443 -v /home/user/mysite/:/var/www/html/ -d eboraas/apache
     </p>
-  </div>
+
+    <h2>STEP 5: Setjum upp MySQL</h2>
+
+    <p>
+        $ sudo apt-get install mysql-server</br>
+        $ sudo /usr/bin/mysql_secure_installation (setup scripta)</br>
+        veljið alltaf já við alla möguleika nema þegar það er beðið þig um að breyta root passwordinu</br>
+        Til að fara í mysql skelina gerum við:
+        $ mysql -u root -p</br>
+        til að fara úr skelinni:</br>
+        # exit
+    </p>
+
+    <h2>STEP 5: Búum til MySQL scriptu sem býr til 15 notendur</h2>
+
+    <p>
+        $ touch userscript</br>
+        $ sudo chmod 777 userscript</br>
+        $ nano userscript</br>
+    </p>
 
         <div id="linux">LINUX TÓL:</div>
         <div id="linuxtools">
@@ -69,6 +89,7 @@
         <p><b>rmdir:</b> Eyðir möppu.</p>
         <p><b>touch:</b> Getur notað þessa skipun til þess að búa til textaskjöl, skriptur og fl.</p>
         </div>
+    </div>
 </body>
 
 </html>
